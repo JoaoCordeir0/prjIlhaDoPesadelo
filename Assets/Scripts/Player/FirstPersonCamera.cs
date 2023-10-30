@@ -23,6 +23,8 @@ public class FirstPersonCamera : MonoBehaviour
     float smoothCoefx = 0.005f;
     float smoothCoefy = 0.005f;*/
 
+    bool canMouseMove = true;
+
     void Start()
     {
         Cursor.visible = false; // Faz com que meu cursor fique invisivel
@@ -36,21 +38,29 @@ public class FirstPersonCamera : MonoBehaviour
 
     void Update()
     {
-        float verticalDelta = Input.GetAxisRaw("Mouse Y") * sensitivityY; // Define as posições do mouse de cima e baixo
-        float horizontalDelta = Input.GetAxisRaw("Mouse X") * sensitivityX; // Define as posições do mouse para os lados
- 
-        //smoothRotx = Mathf.Lerp(smoothRotx, horizontalDelta, smoothCoefx);
-        //smoothRoty = Mathf.Lerp(smoothRoty, verticalDelta, smoothCoefy);
-        //rotationX += smoothRotx;
-        //rotationY += smoothRoty;
+        if (canMouseMove)
+        {
+            float verticalDelta = Input.GetAxisRaw("Mouse Y") * sensitivityY; // Define as posições do mouse de cima e baixo
+            float horizontalDelta = Input.GetAxisRaw("Mouse X") * sensitivityX; // Define as posições do mouse para os lados
 
-        rotationX += horizontalDelta; // Recebe os valores da posição em X
-        rotationY += verticalDelta; // Recebe os valores da posição em Y
+            //smoothRotx = Mathf.Lerp(smoothRotx, horizontalDelta, smoothCoefx);
+            //smoothRoty = Mathf.Lerp(smoothRoty, verticalDelta, smoothCoefy);
+            //rotationX += smoothRotx;
+            //rotationY += smoothRoty;
 
-        rotationY = Mathf.Clamp(rotationY, angleYmin, angleYMax);
+            rotationX += horizontalDelta; // Recebe os valores da posição em X
+            rotationY += verticalDelta; // Recebe os valores da posição em Y
 
-        characterBody.localEulerAngles = new Vector3(0, rotationX, 0);
-        
-        transform.localEulerAngles = new Vector3(-rotationY, rotationX, 0);
+            rotationY = Mathf.Clamp(rotationY, angleYmin, angleYMax);
+
+            characterBody.localEulerAngles = new Vector3(0, rotationX, 0);
+
+            transform.localEulerAngles = new Vector3(-rotationY, rotationX, 0);
+        } 
+    }
+
+    public void CancelCamera(bool value)
+    {
+        canMouseMove = value;
     }
 }

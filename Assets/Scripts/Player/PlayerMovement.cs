@@ -20,6 +20,8 @@ public class PlayerMovement : MonoBehaviour
     float maxJumpHeight = 2f; // Altura maxima que o pulo pode chegar
     float timeToMaxHeight = 0.5f; // Tempo que meu personagem leva para chegar na altura maxima
 
+    bool canMove = true;
+
     void Start()
     {
         controller = GetComponent<CharacterController>(); // Capturo o componente (corpo) do personagem
@@ -56,7 +58,15 @@ public class PlayerMovement : MonoBehaviour
         // Junta todos meus dados para ir pra frente, tras e cima em um unico vetor
         Vector3 finalVelocity = forward + strafe + vertical;
 
-        // Transforma todos os dados no movimento
-        controller.Move(finalVelocity * Time.deltaTime);
+        if(canMove)
+        {
+            // Transforma todos os dados no movimento
+            controller.Move(finalVelocity * Time.deltaTime);
+        }   
+    }
+
+    public void CancelMove(bool value)
+    {
+        canMove = true;
     }
 }
