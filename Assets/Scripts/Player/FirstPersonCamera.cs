@@ -43,10 +43,10 @@ public class FirstPersonCamera : MonoBehaviour
             float verticalDelta = Input.GetAxisRaw("Mouse Y") * sensitivityY; // Define as posições do mouse de cima e baixo
             float horizontalDelta = Input.GetAxisRaw("Mouse X") * sensitivityX; // Define as posições do mouse para os lados
 
-            //smoothRotx = Mathf.Lerp(smoothRotx, horizontalDelta, smoothCoefx);
-            //smoothRoty = Mathf.Lerp(smoothRoty, verticalDelta, smoothCoefy);
-            //rotationX += smoothRotx;
-            //rotationY += smoothRoty;
+            /*smoothRotx = Mathf.Lerp(smoothRotx, horizontalDelta, smoothCoefx);
+            smoothRoty = Mathf.Lerp(smoothRoty, verticalDelta, smoothCoefy);
+            rotationX += smoothRotx;
+            rotationY += smoothRoty;*/
 
             rotationX += horizontalDelta; // Recebe os valores da posição em X
             rotationY += verticalDelta; // Recebe os valores da posição em Y

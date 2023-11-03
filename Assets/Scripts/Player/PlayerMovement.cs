@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     // Define minhas variaveis
     CharacterController controller; // Recebe o objeto do meu player
+    Animator animator; 
 
     // Variaveis de movimento
     Vector3 forward;  // Personagem para frente
@@ -25,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         controller = GetComponent<CharacterController>(); // Capturo o componente (corpo) do personagem
+        animator = GetComponent<Animator>();
 
         gravity = (-2 * maxJumpHeight) / (timeToMaxHeight * timeToMaxHeight); // Defino minha gravidade
         jumpSpeed = (2 * maxJumpHeight) / timeToMaxHeight; // Defino minha velocidade do pulo
@@ -35,38 +37,47 @@ public class PlayerMovement : MonoBehaviour
         float forwardInput = Input.GetAxis("Vertical");  // Capturo minhas teclas para andar para frente
         float strafeInput = Input.GetAxis("Horizontal"); // Capturo minhas teclas para andar para os lados
 
-        //force = input * speed * direction => Calculo da forca
-        forward = forwardInput * forwardSpeed * transform.forward; // Calcula minha força para ir pra frente
-        strafe = strafeInput * strafeSpeed * transform.right; // Calcula minha força para ir pros lados
-
-        vertical += gravity * Time.deltaTime * Vector3.up; // Calcula minha força para ir para cim
-           
-        // Verifica se meu personagem está no chão, caso sim, desce meu personagem para baixo
-        if (controller.isGrounded)
-            vertical = Vector3.down;
-
-        // Verifica se meu usuario apertou a tecla 'Space' e se o personagem esta no chão, caso sim,
-        // adiciono uma força para cima
-        if (Input.GetKeyDown(KeyCode.Space) && controller.isGrounded)
-            vertical = jumpSpeed * Vector3.up;
-
-        // Verifica se meu personagem esta no ar e se teve alguma colisão acima de sua cabeça, caso sim,
-        // desce meu personagem para baixo (Serve para não ficar preso no teto)
-        if (vertical.y > 0 && (controller.collisionFlags & CollisionFlags.Above) != 0)
-            vertical = Vector3.zero;
-
-        // Junta todos meus dados para ir pra frente, tras e cima em um unico vetor
-        Vector3 finalVelocity = forward + strafe + vertical;
-
-        if(canMove)
+        if (canMove)
         {
+            //force = input * speed * direction => Calculo da forca
+            forward = forwardInput * forwardSpeed * transform.forward; // Calcula minha força para ir pra frente
+            strafe = strafeInput * strafeSpeed * transform.right; // Calcula minha força para ir pros lados
+
+            vertical += gravity * Time.deltaTime * Vector3.up; // Calcula minha força para ir para cim
+           
+            // Verifica se meu personagem está no chão, caso sim, desce meu personagem para baixo
+            if (controller.isGrounded)
+                vertical = Vector3.down;
+
+            // Verifica se meu usuario apertou a tecla 'Space' e se o personagem esta no chão, caso sim,
+            // adiciono uma força para cima
+            if (Input.GetKeyDown(KeyCode.Space) && controller.isGrounded)
+                vertical = jumpSpeed * Vector3.up;
+
+            // Verifica se meu personagem esta no ar e se teve alguma colisão acima de sua cabeça, caso sim,
+            // desce meu personagem para baixo (Serve para não ficar preso no teto)
+            if (vertical.y > 0 && (controller.collisionFlags & CollisionFlags.Above) != 0)
+                vertical = Vector3.zero;
+
+            // Junta todos meus dados para ir pra frente, tras e cima em um unico vetor
+            Vector3 finalVelocity = forward + strafe + vertical;
+
             // Transforma todos os dados no movimento
             controller.Move(finalVelocity * Time.deltaTime);
+
+            if(finalVelocity != Vector3.zero)
+            {
+                animator.SetBool("walking", true);
+            }
+            else
+            {
+                animator.SetBool("walking", false);
+            }
         }   
     }
 
     public void CancelMove(bool value)
     {
-        canMove = true;
+        canMove = value;
     }
 }

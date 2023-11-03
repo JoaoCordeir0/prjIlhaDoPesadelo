@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73f8cf35919bf7943ad6c0b68c94307a, type: 3}
   m_Name: HealPlant
   m_EditorClassIdentifier: 
-  itemName: HealPlant
+  itemName: Planta
   itemSprite: {fileID: 21300000, guid: dca3415c47bb3404f9fc26f82238b543, type: 3}
