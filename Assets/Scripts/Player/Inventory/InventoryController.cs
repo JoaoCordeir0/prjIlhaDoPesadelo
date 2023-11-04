@@ -10,6 +10,11 @@ public class InventoryController : MonoBehaviour
     public int[] slotAmount;
     private InterfaceController iController;
 
+    [SerializeField]
+    private GameObject flashlight;
+
+    [SerializeField]
+    private Text taskMessage;
 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +36,12 @@ public class InventoryController : MonoBehaviour
 
                 if (Input.GetKeyDown(KeyCode.E))
                 {
+                    if(hit.transform.GetComponent<ObjectType>().objectType.itemName == "Flashlight")
+                    {
+                        flashlight.transform.gameObject.SetActive(true);
+                        taskMessage.text = "Ache o mapa que se encontra na cabana.";
+                    }
+
                     for (int i = 0; i < slots.Length; i++)
                     {
                         if (slots[i] == null || slots[i].name == hit.transform.GetComponent<ObjectType>().objectType.name) 
