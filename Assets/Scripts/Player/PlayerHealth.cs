@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -24,21 +25,25 @@ public class PlayerHealth : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.O))
+         
+    }
+
+    void OnTriggerEnter(Collider collider)
+    {
+        if(collider.gameObject.tag == "Enemy")
         {
             playerHealth -= 1;
 
-            if(playerHealth == 0)
+            if (playerHealth == 0)
             {
-                restartPanel.SetActive(true);
-                bloodScreenImage.gameObject.SetActive(false);
+                SceneManager.LoadScene("GameOver");
             }
             else
             {
                 Color alpha = bloodScreenImage.color;
                 alpha.a += 0.4f;
                 bloodScreenImage.color = alpha;
-            }       
+            }
         }
     }
 }

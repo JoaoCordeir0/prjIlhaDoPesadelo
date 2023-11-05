@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
 
     float forwardSpeed = 5f; // Velocidade para frente
     float strafeSpeed = 5f;  // Velocidade para os lados
+    float runSpeed = 10f; 
 
     float gravity; // Gravidade do personagem
     float jumpSpeed; // Velocidade do pulo
@@ -36,6 +37,7 @@ public class PlayerMovement : MonoBehaviour
     {
         float forwardInput = Input.GetAxis("Vertical");  // Capturo minhas teclas para andar para frente
         float strafeInput = Input.GetAxis("Horizontal"); // Capturo minhas teclas para andar para os lados
+        float runInput = Input.GetAxis("Run");
 
         if (canMove)
         {
@@ -59,6 +61,11 @@ public class PlayerMovement : MonoBehaviour
             if (vertical.y > 0 && (controller.collisionFlags & CollisionFlags.Above) != 0)
                 vertical = Vector3.zero;
 
+            if (runInput != 0)
+                forwardSpeed = runSpeed;
+            else
+                forwardSpeed = 5f;
+
             // Junta todos meus dados para ir pra frente, tras e cima em um unico vetor
             Vector3 finalVelocity = forward + strafe + vertical;
 
@@ -66,13 +73,9 @@ public class PlayerMovement : MonoBehaviour
             controller.Move(finalVelocity * Time.deltaTime);
 
             if(finalVelocity != Vector3.zero)
-            {
                 animator.SetBool("walking", true);
-            }
             else
-            {
                 animator.SetBool("walking", false);
-            }
         }   
     }
 
