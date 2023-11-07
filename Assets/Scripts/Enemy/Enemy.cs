@@ -8,7 +8,7 @@ public class Enemy : MonoBehaviour
 {
     private NavMeshAgent navMeshEnemy;
     private GameObject player;
-    private float enemySpeed = 6f;
+    private float enemySpeed = 10f;
 
     private GameObject enemyCollider;
 
@@ -17,7 +17,6 @@ public class Enemy : MonoBehaviour
         navMeshEnemy = GetComponent<NavMeshAgent>();
         player = GameObject.FindWithTag("Player");
         enemyCollider = GameObject.FindWithTag("Enemy");
-        enemyCollider.SetActive(false);
     }
     void Update()
     {
@@ -26,7 +25,6 @@ public class Enemy : MonoBehaviour
         if(Vector3.Distance(transform.position, player.transform.position) < 1f)
         {
             navMeshEnemy.speed = 0;
-            enemyCollider.SetActive(true);
             StartCoroutine("Attack");
         }
     }
@@ -34,7 +32,6 @@ public class Enemy : MonoBehaviour
     IEnumerator Attack()
     {
         yield return new WaitForSeconds(2.8f);
-        enemyCollider.SetActive(false);
         navMeshEnemy.speed = enemySpeed;
     }
 }

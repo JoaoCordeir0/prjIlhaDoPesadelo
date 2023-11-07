@@ -10,22 +10,14 @@ public class PlayerHealth : MonoBehaviour
 
     [SerializeField]
     private Image bloodScreenImage = null;
-    [SerializeField]
-    private GameObject restartPanel;
 
+    public GameObject jumpScene;
+    public GameObject enemy;
 
     // Start is called before the first frame update
     void Start()
     {
-        Color alpha = bloodScreenImage.color;
-        alpha.a = 0;
-        bloodScreenImage.color = alpha;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-         
+        BloodScreenImage();
     }
 
     void OnTriggerEnter(Collider collider)
@@ -36,7 +28,11 @@ public class PlayerHealth : MonoBehaviour
 
             if (playerHealth == 0)
             {
-                SceneManager.LoadScene("GameOver");
+                BloodScreenImage();
+                jumpScene.SetActive(true);
+                enemy.SetActive(false);
+                StartCoroutine("EndJumpScare");
+                //SceneManager.LoadScene("GameOver");
             }
             else
             {
@@ -45,5 +41,19 @@ public class PlayerHealth : MonoBehaviour
                 bloodScreenImage.color = alpha;
             }
         }
+    }
+
+    IEnumerator EndJumpScare()
+    {
+        yield return new WaitForSeconds(2.05f);
+        jumpScene.SetActive(false);
+        SceneManager.LoadScene("GameOver");
+    }
+
+    private void BloodScreenImage()
+    {
+        Color alpha = bloodScreenImage.color;
+        alpha.a = 0;
+        bloodScreenImage.color = alpha;
     }
 }
