@@ -16,6 +16,11 @@ public class InventoryController : MonoBehaviour
     [SerializeField]
     private Text taskMessage;
 
+    [SerializeField]
+    private RawImage mapPanel;
+
+    private PlayerHealth health;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -60,6 +65,35 @@ public class InventoryController : MonoBehaviour
             else if (hit.collider.tag != "Object")
             {
                 iController.itemText.text = null;
+            }
+        }
+
+        if(Input.GetKeyDown(KeyCode.M))
+        {
+            for(int i = 0; i < slots.Length; i++)
+            {
+                if (slots[i] != null && slots[i].itemName.Equals("Mapa"))
+                {
+                    mapPanel.enabled = !mapPanel.enabled;
+                    break;
+                }           
+            }
+        }
+
+        if(Input.GetKeyDown(KeyCode.H))
+        {
+            for(int i = 0; i < slots.Length; i++)
+            {
+                if (slots[i] != null && slots[i].itemName.Equals("Planta"))
+                {
+                    /*health.playerHealth += 1;
+
+                    Color alpha = health.bloodScreenImage.color;
+                    alpha.a -= 0.4f;
+                    health.bloodScreenImage.color = alpha;*/
+                    Debug.Log(slots[i].itemName);
+                    break;
+                }
             }
         }
     }
