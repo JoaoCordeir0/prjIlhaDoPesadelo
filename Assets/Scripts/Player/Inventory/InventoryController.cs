@@ -19,7 +19,8 @@ public class InventoryController : MonoBehaviour
     [SerializeField]
     private RawImage mapPanel;
 
-    private PlayerHealth health;
+    [SerializeField]
+    private GameObject enemy;
 
     // Start is called before the first frame update
     void Start()
@@ -45,6 +46,12 @@ public class InventoryController : MonoBehaviour
                     {
                         flashlight.transform.gameObject.SetActive(true);
                         taskMessage.text = "Ache o mapa que se encontra na cabana.";
+                    }
+
+                    if(hit.transform.GetComponent<ObjectType>().objectType.itemName == "Mapa")
+                    {
+                        enemy.SetActive(true);
+                        taskMessage.text = "Procure o gerador na ilha.";
                     }
 
                     for (int i = 0; i < slots.Length; i++)
@@ -77,23 +84,6 @@ public class InventoryController : MonoBehaviour
                     mapPanel.enabled = !mapPanel.enabled;
                     break;
                 }           
-            }
-        }
-
-        if(Input.GetKeyDown(KeyCode.H))
-        {
-            for(int i = 0; i < slots.Length; i++)
-            {
-                if (slots[i] != null && slots[i].itemName.Equals("Planta"))
-                {
-                    /*health.playerHealth += 1;
-
-                    Color alpha = health.bloodScreenImage.color;
-                    alpha.a -= 0.4f;
-                    health.bloodScreenImage.color = alpha;*/
-                    Debug.Log(slots[i].itemName);
-                    break;
-                }
             }
         }
     }

@@ -5,6 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class TurnOnGenerator : MonoBehaviour
 {
+    private InterfaceController iController;
+
+    void Start()
+    {
+        iController = FindObjectOfType<InterfaceController>();
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -15,9 +22,11 @@ public class TurnOnGenerator : MonoBehaviour
         {
             if(hit.collider.tag == "Generator") 
             {
+                iController.itemText.text = "Pressione (E) para ligar o gerador e salvar a todos na ilha.";
+
                 if(Input.GetKeyDown(KeyCode.E)) 
                 {
-                    SceneManager.LoadScene("GameOver");
+                    SceneManager.LoadScene("EndGame");
                 }
             }
         }
