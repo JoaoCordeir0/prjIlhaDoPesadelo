@@ -10,6 +10,12 @@ public class EndManager : MonoBehaviour
     [SerializeField]
     private string mainMenu;
 
+    public void Start()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
     public void ReloadGame()
     {
         SceneManager.LoadScene(gameLevel);

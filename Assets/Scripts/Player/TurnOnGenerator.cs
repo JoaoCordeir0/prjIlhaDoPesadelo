@@ -7,6 +7,9 @@ public class TurnOnGenerator : MonoBehaviour
 {
     private InterfaceController iController;
 
+    [SerializeField]
+    private GameObject cutsceneCamera;
+
     void Start()
     {
         iController = FindObjectOfType<InterfaceController>();
@@ -20,15 +23,27 @@ public class TurnOnGenerator : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, 5f))
         {
-            if(hit.collider.tag == "Generator") 
+            if (hit.collider.tag == "Generator")
             {
                 iController.itemText.text = "Pressione (E) para ligar o gerador e salvar a todos na ilha.";
 
-                if(Input.GetKeyDown(KeyCode.E)) 
+                if (Input.GetKeyDown(KeyCode.E))
                 {
-                    SceneManager.LoadScene("EndGame");
+                    iController.itemText.text = null;
+                    cutsceneCamera.SetActive(true);
+                    StartCoroutine("EndCutscene");
                 }
             }
+            else if (hit.collider.tag == "FakeGenerator")
+            {
+                iController.itemText.text = "Ops parece que esse gerador não está funcionando.";
+            }
         }
+    }
+
+    IEnumerator EndCutscene()
+    {
+        yield return new WaitForSeconds(1.5f);
+        SceneManager.LoadScene("EndGame");
     }
 }

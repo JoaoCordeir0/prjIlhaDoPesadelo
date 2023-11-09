@@ -10,6 +10,12 @@ public class RestartManager : MonoBehaviour
     [SerializeField]
     private string mainMenu;
 
+    public void Start()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
     public void RestartLevel()
     {
         SceneManager.LoadScene(gameLevel);

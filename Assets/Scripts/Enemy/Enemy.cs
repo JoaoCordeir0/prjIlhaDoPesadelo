@@ -8,7 +8,7 @@ public class Enemy : MonoBehaviour
 {
     private NavMeshAgent navMeshEnemy;
     private GameObject player;
-    private float enemySpeed = 18f;
+    private float enemySpeed = 40f;
 
     private GameObject enemyCollider;
 
